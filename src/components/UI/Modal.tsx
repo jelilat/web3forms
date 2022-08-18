@@ -1,5 +1,6 @@
 
 import React, { FC, Fragment, ReactNode } from 'react'
+import { XIcon } from '@heroicons/react/solid'
 
 interface ModalProps {
     children: ReactNode[] | ReactNode;
@@ -12,9 +13,14 @@ export const Modal = ({...ModalProps}: ModalProps) => {
             {
                 ModalProps.active && (
                     <div className="fixed inset-0 z-50 bg-black bg-opacity-75 transition-opacity ">
-                        <div className="flex justify-left items-center p-4 min-h-screen sm:block sm:p-0">
+                        <div className="flex justify-left items-center min-h-screen sm:block sm:p-0">
                             <div className="flex h-screen justify-center items-center ">
-                                <div className="flex-col bg-white py-4 px-4 border-2 rounded-lg opacity-1000">
+                                <div className="flex-col bg-white p-4 border-2 rounded-lg opacity-1000">
+                                    <XIcon className="w-3 float-right cursor-pointer"
+                                        onClick={() => {
+                                            ModalProps.onClose()
+                                        }}
+                                    />
                                     {ModalProps.children}
                                 </div>
                             </div>

@@ -1,6 +1,13 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 
+import dynamic from 'next/dynamic'
+
+const Header = dynamic(
+    () => import('@components/Header/Header'),
+    { ssr: false }
+)
+
 import {
   WagmiConfig,
   createClient,
@@ -57,6 +64,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AppWrapper>
       <WagmiConfig client={wagmiClient}>
+        <Header />
         <Component {...pageProps} />
       </WagmiConfig>
     </AppWrapper>
