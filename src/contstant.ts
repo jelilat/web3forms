@@ -1,12 +1,4 @@
-export type FormFieldType = {
-    id: string,
-    name: string,
-    icon: string,
-    description?: string,
-    options?: Array<string>,
-    type?: Array<string>,
-    placeholder?: string
-}
+import { Module, Settings } from '@components/types/types';
 
 export const FileTypes = ['img/png', 'img/jpg', 'img/jpeg', 'img/gif', 'file/pdf', 'file/doc', 'file/docx', 'file/xls', 'file/xlsx', 'file/csv', 'file/txt']
 
@@ -17,6 +9,7 @@ export const FormFields = [
         icon: "",
         description: "",
         placeholder: "Enter short text",
+        required: false,
     },
     {
         id: 'long-text',
@@ -24,6 +17,7 @@ export const FormFields = [
         icon: "",
         description: "",
         placeholder: "Enter long text",
+        required: false,
     },
     {
         id: 'number',
@@ -31,6 +25,7 @@ export const FormFields = [
         icon: "",
         description: "",
         placeholder: "0",
+        required: false,
     },
     {
         id: 'single-select',
@@ -39,6 +34,7 @@ export const FormFields = [
         description: "",
         options: [],
         placeholder: "Select an option",
+        required: false,
     },
     {
         id: 'multi-select',
@@ -47,6 +43,7 @@ export const FormFields = [
         description: "",
         options: [],
         placeholder: "Select an option",
+        required: false,
     },
     {
         id: 'radio',
@@ -55,13 +52,15 @@ export const FormFields = [
         description: "",
         options: [],
         placeholder: "Select an option",
+        required: false,
     },
     {
         id: 'checkbox',
         name: 'Checkbox',
         icon: "",
         description: "",
-        options: []
+        options: [],
+        required: false,
     },
     {
         id: 'file',
@@ -69,27 +68,98 @@ export const FormFields = [
         icon: "",
         description: "",
         type: FileTypes,
-        placeholder: "Upload a file"
+        placeholder: "Upload a file",
+        required: false,
     },
     {
         id: 'date',
         name: 'Date',
         icon: "",
         description: "",
-        placeholder: "Select a date"
+        placeholder: "Select a date",
+        required: false,
     },
     {
         id: 'time',
         name: 'Time',
         icon: "",
         description: "",
-        placeholder: "Select a time"
+        placeholder: "Select a time",
+        required: false,
     },
     {
         id: 'datetime',
         name: 'DateTime',
         icon: "",
         description: "",
-        placeholder: "Select a date and time"
+        placeholder: "Select a date and time",
+        required: false,
     }
 ];
+
+export const Modules: Array<Module> = [
+    'Free',
+    'Fee',
+    'LimitedFree',
+    'LimitedFee',
+    'LimitedTimedFree',
+    'LimitedTimedFee',
+    'TimedFree',
+    'TimedFee',
+]
+
+export const ModuleOptions = [
+    {
+        amount: false,
+        maximum: false,
+        expiry: false,
+    },
+    {
+        amount: true,
+        maximum: false,
+        expiry: false,
+    },
+    {
+        amount: false,
+        maximum: true,
+        expiry: false,
+    },
+    {
+        amount: true,
+        maximum: true,
+        expiry: false,
+    },
+    {
+        amount: false,
+        maximum: true,
+        expiry: true,
+    },
+    {
+        amount: true,
+        maximum: true,
+        expiry: true,
+    },
+    {
+        amount: false,
+        maximum: false,
+        expiry: true,
+    },
+    {
+        amount: true,
+        maximum: false,
+        expiry: true,
+    }
+]
+
+export const defaultSettings: Settings = {
+    formTitle: '',
+    module: {
+        type: 'Free',
+        options: null
+    },
+    tokenGate: {
+        tokenAddress: '',
+        networkId: 137,
+        minimumBalance: 1,
+    },
+}

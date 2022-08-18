@@ -16,6 +16,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",
+    "wagmi": "^0.6.3",
     "web3.storage": "^4.3.0"
   },
   "devDependencies": {

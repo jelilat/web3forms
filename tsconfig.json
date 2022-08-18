@@ -19,9 +19,8 @@
       "src/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@pages/*": ["pages/*"],
-      "@utils/*": ["utils/*"],
       "@types/*": ["types/*"],
-      "@utils*": ["src/utils*"],
+      "@utils*": ["src/components/utils/*"],
       "@lib*": ["src/lib*"],
     }
   },
