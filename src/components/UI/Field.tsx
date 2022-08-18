@@ -4,10 +4,11 @@ import { useAppContext } from '../utils/AppContext';
 
 interface FieldProps {
     formField: FormFieldType;
+    index: number;
 }
 
-export const Field = ({formField}: FieldProps) => {
-    const { setSubmission } = useAppContext();
+export const Field = ({formField, index}: FieldProps) => {
+    const { submission, setSubmission } = useAppContext();
 
     return(
         <div>
@@ -29,12 +30,26 @@ export const Field = ({formField}: FieldProps) => {
                                     formField?.options?.map((option, index) => {
                                         return (
                                             <div key={index}>
-                                                <input type={formField?.id} />{option}<br />
+                                                <input type={formField?.id} value={option} />{option}<br />
                                             </div>
                                         )
                                     })
                                 }
                             </div>
+                        }
+                        {
+                            formField?.type === "select" && 
+                            <select>
+                                {
+                                    formField?.options?.map((option, index) => {
+                                        return (
+                                            <div key={index}>
+                                                <option value={option}>{option}</option>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </select>
                         }
                     </div>
                 )
