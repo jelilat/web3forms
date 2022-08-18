@@ -73,7 +73,7 @@ export type FormFieldType = {
     icon: string,
     description?: string,
     options?: Array<string>,
-    type?: Array<string>,
+    type?: string,
     placeholder?: string,
     required: boolean,
 }
@@ -83,4 +83,9 @@ export type FormData = {
     formFields: FormFieldType[],
     settings: Settings,
     storageLink: string,
+}
+
+export type FormSubmission = {
+    name: string,
+    value: string 
 }

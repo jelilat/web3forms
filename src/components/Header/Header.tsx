@@ -14,7 +14,9 @@ const Header = () => {
         <>
             <div className="flex text-sm p-3 border-b-2 border-b-black-500 sticky top-0 bg-white">
                 <div className="w-1/2 float-right p-2 font-semibold">
-                    Web3Forms
+                    <Link href="/">
+                        Web3Forms
+                    </Link>
                 </div>
                 
                 <div className="w-1/2 flex justify-end">

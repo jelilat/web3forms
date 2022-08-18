@@ -6,13 +6,17 @@ import {
     useContext,
     useState 
   } from 'react';
-  import { FormFieldType } from '@components/types/types';
+  import { FormFieldType, FormData, FormSubmission } from '@components/types/types';
   
   export interface ContextType {
       address: string | undefined;
       fields: FormFieldType[];
+      formData: FormData | undefined;
+      submission: FormSubmission[];
       setUserAddress: Dispatch<SetStateAction<string>>;
       setFields: Dispatch<SetStateAction<FormFieldType[]>>;
+      setFormData: Dispatch<SetStateAction<FormData | undefined>>;
+      setSubmission: Dispatch<SetStateAction<FormSubmission[]>>;
     }
   
   type Props = {
@@ -22,18 +26,29 @@ import {
   const AppContext = createContext<ContextType>({
     address: undefined,
     fields: [],
+    formData: undefined,
+    submission: [],
     setUserAddress: () => {},
     setFields: () => {},
+    setFormData: () => {},
+    setSubmission: () => {}
   })
   
   export function AppWrapper({ children }: Props) {
     const [address, setUserAddress] = useState("")
     const [fields, setFields] = useState<FormFieldType[]>([])
+    const [formData, setFormData] = useState<FormData>()
+    const [submission, setSubmission] = useState<FormSubmission[]>([])
+
     const value = {
       address,
       fields,
+      formData,
+      submission,
       setUserAddress,
-      setFields
+      setFields,
+      setFormData,
+      setSubmission
     }
   
     return (

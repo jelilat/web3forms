@@ -1,9 +1,13 @@
-import { allChains } from "wagmi";
+import { allChains, useAccount } from "wagmi";
 import { Modules, ModuleOptions, defaultSettings } from "src/contstant";
-import { Module, Settings } from "@components/types/types";
+import { Settings } from "@components/types/types";
 import { useState } from "react";
+import { useAppContext } from "@utils/AppContext";
+import Link from "next/link";
 
 const Settings = () => {
+    const { fields, setFormData } = useAppContext();
+    const { isConnected, address } = useAccount();
     const [moduleIndex, setModuleIndex] = useState<number>(0);
     const [settings, setSettings] = useState<Settings>(defaultSettings);
     const today = new Date().toISOString().split("T")[0];
@@ -160,6 +164,24 @@ const Settings = () => {
                             </div>
                         )
                     }
+                </div>
+                <div>
+                    <button onClick={() => {
+                        if (isConnected) {
+                            setFormData({
+                                ownerAddress: address!,
+                                formFields: fields,
+                                settings: settings,
+                                storageLink: ""
+                            })
+                        } else {
+                            alert("Please connect your wallet")
+                        }
+                    }}
+                        className="border bg-black text-white p-1 mr-1 rounded-lg w-20"
+                    >
+                        <Link href={isConnected ? "/preview" : "#"}>Preview</Link>
+                    </button>
                 </div>
             </div>
         </>
