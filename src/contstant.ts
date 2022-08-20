@@ -35,6 +35,7 @@ export const FormFields = [
         name: 'Single Select',
         icon: "",
         description: "",
+        type: "select",
         options: [],
         placeholder: "Select an option",
         required: false,
@@ -44,6 +45,7 @@ export const FormFields = [
         name: 'Multi Select',
         icon: "",
         description: "",
+        type: "select",
         options: [],
         placeholder: "Select an option",
         required: false,
@@ -94,14 +96,14 @@ export const FormFields = [
         placeholder: "Select a time",
         required: false,
     },
-    {
-        id: 'datetime',
-        name: 'DateTime',
-        icon: "",
-        description: "",
-        placeholder: "Select a date and time",
-        required: false,
-    }
+    // {
+    //     id: 'datetime',
+    //     name: 'DateTime',
+    //     icon: "",
+    //     description: "",
+    //     placeholder: "Select a date and time",
+    //     required: false,
+    // }
 ];
 
 export const Modules: Array<Module> = [

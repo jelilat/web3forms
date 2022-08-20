@@ -1,8 +1,8 @@
 import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { FormFields } from 'src/contstant'
 import { FormFieldType } from "@components/types/types";
-import { PencilIcon, DuplicateIcon, TrashIcon } from '@heroicons/react/solid';
+import { PencilIcon, DuplicateIcon, TrashIcon, PlusIcon } from '@heroicons/react/solid';
 import Image from 'next/image'
 import Link from 'next/link'
 import { Modal } from '@components/UI/Modal';
@@ -13,6 +13,7 @@ const FormBuilder = () => {
     const [selectedFormFields, setSelectedFormFields] = useState<Array<FormFieldType>>([])
     const [showModal, setShowModal] = useState<boolean>(false)
     const [editing, setEditing] = useState<number>(0)
+    const [activeOption, setActiveOption] = useState<string>("")
     const [showContinueModal, setShowContinueModal] = useState<boolean>(false)
 
     const onDragEnd = (result: any) => {
@@ -25,21 +26,6 @@ const FormBuilder = () => {
         setSelectedFormFields(items);
     }
 
-    const handleSave = (event: any) => {
-        event.preventDefault();
-        let newFieldDetails = selectedFormFields
-        newFieldDetails[editing] = {
-            ...newFieldDetails[editing],
-            name: event.target[0].value,
-            placeholder: event.target[1].value,
-            description: event.target[2].value,
-            required: event.target[3].checked,
-        }
-        setSelectedFormFields(newFieldDetails)
-        setShowModal(false)
-        console.log(newFieldDetails)
-    }
-
     return (
         <>
             <div className='flex p-3 mx-10 mt-5 max-h-screen'>
@@ -49,6 +35,7 @@ const FormBuilder = () => {
                             return(
                                 <div key={index} className="h-16 w-24" 
                                     onClick={() => {
+                                        formfield.options = []
                                         setSelectedFormFields([...selectedFormFields, formfield])
                                     }}
                                 >
@@ -110,25 +97,87 @@ const FormBuilder = () => {
                 >
                     <div className="left-0">
                         <h1 className="text-black m-1 text-md">Settings</h1>
-                        <form onSubmit={(event) => handleSave(event)}>
-                            <input className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to edit field name" /><br />
-                            <input className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to edit placeholder text" /><br />
-                            <input className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to add a description" /><br />
+                        <div>
+                            <input onChange={(event) => {
+                                let newFieldDetails = selectedFormFields
+                                newFieldDetails[editing] = {
+                                    ...newFieldDetails[editing],
+                                    name: event.target.value
+                                }
+                                setSelectedFormFields(newFieldDetails)
+                            }}
+                                defaultValue={selectedFormFields[editing]?.name} 
+                                className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to edit field name" /><br />
+                            <input onChange={(event) => {
+                                    let newFieldDetails = selectedFormFields
+                                    newFieldDetails[editing] = {
+                                        ...newFieldDetails[editing],
+                                        description: event.target.value
+                                    }
+                                    setSelectedFormFields(newFieldDetails)
+                                }}
+                                defaultValue={selectedFormFields[editing]?.description} 
+                                className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to add a description" /><br />
+                            {
+                                selectedFormFields[editing]?.type === 'select' || selectedFormFields[editing]?.type === 'choice' ?
+                                    <div className="m-2">
+                                        <label>Add options</label><br />
+                                        {
+                                            selectedFormFields[editing].options?.map((option, index) => {
+                                                return (
+                                                    <div key={index} className="flex">
+                                                        <li>{option}</li>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        <div className="flex">
+                                            <input onChange={(event) => {setActiveOption(event.target.value)}} 
+                                                className="rounded-lg border border-gray-700 text-sm p-3 my-1 w-2/3" placeholder="Click to add an option" /><br />
+                                            <button onClick={() => {
+                                                let newOptions = selectedFormFields[editing]?.options;
+                                                newOptions?.push(activeOption)
+                                        
+                                                let newSelectedFormField = selectedFormFields
+                                                newSelectedFormField[editing].options = newOptions
+                                                newSelectedFormField[editing] = {
+                                                    ...newSelectedFormField[editing],
+                                                    options: newOptions,
+                                                    placeholder: newOptions!.join(", ")
+                                                }
+                                        
+                                                setSelectedFormFields(newSelectedFormField)
+                                                setActiveOption('')
+                                            }} className="flex border border-gray-700 rounded-lg w-1/3 p-3 my-1 ml-3 justify-center">
+                                                Add option 
+                                                {/* <PlusIcon className="w-4 h-6 justify-center mx-1 text-gray-600 cursor-auto" />  */}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    : <div>
+                                        <input defaultValue={selectedFormFields[editing]?.placeholder} className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to edit placeholder" /><br />
+                                    </div>
+                            }
                             <label className="my-3 text-sm">
-                                <input type="checkbox" className="mx-1 my-3" />
+                                <input onChange={() => {
+                                    let newFieldDetails = selectedFormFields
+                                    const state = newFieldDetails[editing].required; 
+                                    newFieldDetails[editing] = {
+                                        ...newFieldDetails[editing],
+                                        required: !state,
+                                    }
+                                    setSelectedFormFields(newFieldDetails)
+                                }} checked={selectedFormFields[editing]?.required} type="checkbox" className="mx-1 my-3" />
                                 Make field required
                             </label><br />
-                            <div className="flex m-1 mt-5 text-sm">
-                                <button type="submit" className="border bg-green-600 text-white p-1 mr-1 rounded-lg w-16">
-                                    Save
-                                </button>
-                                <button className="border bg-red-600 text-white p-1 mr-1 rounded-lg w-16"
+                            <div className="flex m-1 mt-3 text-sm">
+                                <button className="border bg-green-600 text-white p-1 mr-1 rounded-lg w-16"
                                     onClick={() => setShowModal(false)}
                                 >
-                                    Cancel
+                                    Done
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </Modal>
             </div>      

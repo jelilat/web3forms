@@ -9,7 +9,7 @@ interface FormProps {
 export const Form = ({ formData, preview }: FormProps) => {
     return (
         <div className="flex flex-col p-2">
-            <h1 className="font-bold text-xl my-2">{formData?.settings?.formTitle}</h1>
+            <h1 className="font-bold text-xl my-2 text-center">{formData?.settings?.formTitle}</h1>
             <div>
                 {
                     formData?.formFields.map((field, index) => {

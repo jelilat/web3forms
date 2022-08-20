@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { SessionProvider } from "next-auth/react"
 
 import dynamic from 'next/dynamic'
 
@@ -62,12 +63,14 @@ const wagmiClient = createClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AppWrapper>
-      <WagmiConfig client={wagmiClient}>
-        <Header />
-        <Component {...pageProps} />
-      </WagmiConfig>
-    </AppWrapper>
+    <SessionProvider session={pageProps.session}>
+      <AppWrapper>
+        <WagmiConfig client={wagmiClient}>
+          <Header />
+            <Component {...pageProps} />
+        </WagmiConfig>
+      </AppWrapper>
+    </SessionProvider>
   )
 }
 

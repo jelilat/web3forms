@@ -87,5 +87,5 @@ export type FormData = {
 
 export type FormSubmission = {
     name: string,
-    value: string 
+    value: string
 }
