@@ -63,7 +63,7 @@ const wagmiClient = createClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session} basePath="/api/auth">
       <AppWrapper>
         <WagmiConfig client={wagmiClient}>
           <Header />
