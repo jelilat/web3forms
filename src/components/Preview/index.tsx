@@ -1,24 +1,56 @@
 import { Form } from "@components/UI/Form"
 import { useAppContext } from "../utils/AppContext"
 import { useSession, signIn } from "next-auth/react"
+import { useMutation } from "react-query"
+import { CreateSpreadsheet } from "@components/types/types"
+import toast from "react-hot-toast"
 
 const Preview = () => {
     const { formData, setFormData } = useAppContext()
     const { data: session } = useSession()
-console.log(session)
-    const handleComplete = async () => {console.log("ok")
+
+    const { isLoading, mutate } = useMutation(
+        "create",
+        (values: CreateSpreadsheet) => 
+            fetch("/api/create", {
+                method: "POST",
+                body: JSON.stringify(values),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            }).then(res => console.log(res.json())),
+        {
+            onSuccess: () => {
+                toast.success("Spreadsheet created successfully!")
+            },
+            onError: () => {
+                toast.error("Something went wrong 😢")
+            },
+        }
+    )
+console.log(isLoading)
+    const handleComplete = async () => {
         if (!session) {
             signIn()
         } else {
-            const response = await fetch('api/submit', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: { 
-                    'Content-Type': 'application/json'
-                }
-            })
-            const data = await response.json()
-            console.log(data)
+            let headers: string[] = []
+            for (let i=0; i<(formData?.formFields!)?.length; i++) {
+                headers.push(formData?.formFields![i]?.name!)
+            }
+            const values: CreateSpreadsheet = {
+                title: formData?.settings?.formTitle!,
+                headers: headers,
+            }
+            mutate(values)
+            // const body = JSON.stringify(values)
+            // console.log(body)
+            // fetch("/api/create", {
+            //     method: "POST",
+            //     body: body,
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     }
+            // }).then(res => console.log(res.json()))
         }
     }
 

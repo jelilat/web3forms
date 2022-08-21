@@ -8,7 +8,7 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-            scope: "profile email spreadsheets",
+            scope: "profile email https://www.googleapis.com/auth/drive.file",
             prompt: "consent",
             access_type: "offline",
             response_type: "code"

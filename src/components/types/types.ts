@@ -89,3 +89,8 @@ export type FormSubmission = {
     name: string,
     value: string
 }
+
+export type CreateSpreadsheet = {
+    title: string,
+    headers: string[],
+}
