@@ -14,10 +14,7 @@ const Preview = () => {
         (values: CreateSpreadsheet) => 
             fetch("/api/create", {
                 method: "POST",
-                body: JSON.stringify(values),
-                headers: {
-                    "Content-Type": "application/json",
-                }
+                body: JSON.stringify(values)
             }).then(res => console.log(res.json())),
         {
             onSuccess: () => {
