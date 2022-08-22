@@ -94,3 +94,8 @@ export type CreateSpreadsheet = {
     title: string,
     headers: string[],
 }
+
+export type AttributeDefinition = {
+    AttributeName: string,
+    AttributeType: string,
+}

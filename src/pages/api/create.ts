@@ -3,8 +3,8 @@ import type { NextApiHandler } from "next"
 import { getToken } from "next-auth/jwt"
 
 const secret = process.env.SECRET
-console.log("hmmn")
-const CreateHandler: NextApiHandler = async (req, res) => {console.log("yep")
+
+const CreateHandler: NextApiHandler = async (req, res) => {
     if (req.method === "POST") {
         const token = await getToken({ req, secret })
 

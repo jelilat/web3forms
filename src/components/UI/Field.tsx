@@ -21,6 +21,7 @@ export const Field = ({formField, index}: FieldProps) => {
                             name: formField.name,
                             value: e.target.value
                         }
+                        console.log(submission)
                         setSubmission(newSubmission) 
                     }}
                         type={formField?.id} placeholder={formField?.placeholder} 

@@ -9,9 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.154.0",
+    "@aws-sdk/lib-dynamodb": "^3.154.0",
     "@heroicons/react": "^1.0.6",
+    "add": "^2.0.6",
+    "aws-sdk": "^2.1199.0",
     "ethers": "^5.6.9",
     "googleapis": "^107.0.0",
+    "ipfs-http-client": "^57.0.3",
     "next": "12.2.4",
     "next-auth": "^4.10.3",
     "primeicons": "^5.0.0",
@@ -24,7 +29,8 @@
     "react-hot-toast": "^2.3.0",
     "react-query": "^3.39.2",
     "wagmi": "^0.6.3",
-    "web3.storage": "^4.3.0"
+    "web3.storage": "^4.3.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/node": "18.7.1",

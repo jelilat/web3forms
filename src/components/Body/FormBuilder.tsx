@@ -155,7 +155,15 @@ const FormBuilder = () => {
                                         </div>
                                     </div>
                                     : <div>
-                                        <input defaultValue={selectedFormFields[editing]?.placeholder} className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to edit placeholder" /><br />
+                                        <input onChange={(event) => {
+                                            let newFieldDetails = selectedFormFields
+                                            newFieldDetails[editing] = {
+                                                ...newFieldDetails[editing],
+                                                placeholder: event.target.value
+                                            }
+                                            setSelectedFormFields(newFieldDetails)
+                                        }} 
+                                            defaultValue={selectedFormFields[editing]?.placeholder} className="rounded-lg border border-gray-700 text-sm p-3 m-1 lg:w-96 md:w-96" placeholder="Click to edit placeholder" /><br />
                                     </div>
                             }
                             <label className="my-3 text-sm">
