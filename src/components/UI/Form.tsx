@@ -58,8 +58,9 @@ export const Form = ({ formData, preview }: FormProps) => {
             const balance = checkBalance?.data?._hex;
             const decimal = 10**(Number(decimals?.data))
             const bal = parseInt(balance)/decimal
+            console.log(balance)
             counts ++
-            if (bal < tokenGate?.minimumBalance) {
+            if (!bal || bal < tokenGate?.minimumBalance) {
                 setErrorMessage("Insufficient token balance. Can't access form")
                 return
             } else {
@@ -134,7 +135,7 @@ export const Form = ({ formData, preview }: FormProps) => {
                 body: JSON.stringify(values)
             })
             .then((res) => {
-                alert("Submited successfully!")
+                // alert("Submited successfully!")
             })
             .catch(err => {
                 alert("Something went wrong 😢")
@@ -143,6 +144,7 @@ export const Form = ({ formData, preview }: FormProps) => {
         {
             onSuccess: () => {
                 setPaid(false)
+                // alert("Submited successfully!")
                 toast.success("Created successfully!")
             },
             onError: () => {
